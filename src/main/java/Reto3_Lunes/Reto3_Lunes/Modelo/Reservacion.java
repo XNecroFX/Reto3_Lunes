@@ -1,14 +1,17 @@
 package Reto3_Lunes.Reto3_Lunes.Modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "reservacion")
+@Table(name = "reservation")
 public class Reservacion implements Serializable{
     @Id
     @GeneratedValue (strategy =GenerationType.IDENTITY)
@@ -16,7 +19,18 @@ public class Reservacion implements Serializable{
     private Integer starDate;
     private String description;
     private Integer devolutionDate;
-    private String state;
+    private String status;
+
+    
+    @ManyToOne
+    @JoinColumn(name ="id,year")
+    @JsonIgnoreProperties("machine")
+    private Gymmachine machine;
+    
+    @ManyToOne
+    @JoinColumn(name ="idCliente,year")
+    @JsonIgnoreProperties("client")
+    private Cliente client;
 
     public Integer getIdReservation() {
         return idReservation;
@@ -51,10 +65,21 @@ public class Reservacion implements Serializable{
     }
 
     public String getState() {
-        return state;
+        return status;
     }
 
     public void setState(String state) {
-        this.state = state;
-    }  
+        this.status = state;
+    }
+
+    public Gymmachine getMachine() {
+        return machine;
+    }
+
+    public void setMachine(Gymmachine machine) {
+        this.machine = machine;
+    }
+    
+    
+      
 }

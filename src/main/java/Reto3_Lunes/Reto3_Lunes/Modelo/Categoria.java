@@ -1,11 +1,15 @@
 package Reto3_Lunes.Reto3_Lunes.Modelo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +20,10 @@ public class Categoria implements Serializable{
     private Integer idCategory;
     private String name;
     private String description;
+    
+    @OneToMany (cascade = {CascadeType.PERSIST},mappedBy="category")
+    @JsonIgnoreProperties("category")
+    private List<Gymmachine> gymmachine;
 
     public Integer getIdCategory() {
         return idCategory;
@@ -40,7 +48,14 @@ public class Categoria implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
+
+    public List<Gymmachine> getGymmachine() {
+        return gymmachine;
+    }
+
+    public void setGymmachine(List<Gymmachine> gymmachine) {
+        this.gymmachine = gymmachine;
+    }
+
     
 }
